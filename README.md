@@ -1,8 +1,23 @@
-# sql-project
-Написание запросов повышенной сложности
+# SQL querying and relational data analysis
 
-Задача 1
-Рассмотрим таблицу Numbers(a int) , представляющую собой последовательность чисел
+A collection of SQL exercises focused on solving analytical problems using relational data. The project covers sequence analysis, product-level order aggregation, and employee attendance analysis.
+
+## SQL Concepts
+
+The exercises demonstrate practical use of:
+
+- Common Table Expressions (CTEs)
+- Window functions
+- JOINs
+- GROUP BY and HAVING
+- Aggregate functions
+- Date and time operations
+- Conditional logic
+- Relational data analysis
+
+### Task 1: Identifying consecutive number ranges
+
+Given a table `Numbers(a int)` containing a sequence of integers:
 a
 |---------
 | 1
@@ -18,7 +33,9 @@ a
 | 15
 | 17
 
-Задача состоит в том, чтобы вернуть интервалы подряд идущих чисел. Результатом будет таблица из 2 столбцов - ( start , end ):
+The task is to identify intervals of consecutive numbers and return their starting and ending values.
+
+Expected output:
 | start | end
 | ----- | ---
 | 1 | 4
@@ -28,41 +45,49 @@ a
 | 17 | 17
 
 
+---
 
+### Task 2: Product-Level Order Analysis
 
-Задача 2
-Даны 2 таблицы: Goods - таблица товаров и Orders - таблица заказов.
+Two relational tables are provided: `Goods` and `Orders`.
 
-Таблица Goods имеет структуру:
-id - идентификатор товарв
-name - название товара
+The `Goods` table contains:
+- `id` — product identifier
+- `name` — product name
 
-Таблица Orders имеет структуру:
-id - идентификатор заказа
-dt - дата и время заказа
-good_id - идентификатор товара
-amount - количество данного товара в данном заказе
+The `Orders` table contains:
+- `id` — order identifier
+- `dt` — order date and time
+- `good_id` — product identifier
+- `amount` — quantity of the product in the order
 
-Примечание: Очевидно, что одному заказу может соответствовать несколько строк таблицы Orders , т.к. в заказе может быть несколько товаров.
+Since a single order may contain several different products, one order can correspond to multiple rows in the `Orders` table.
 
-Задача состоит в том, чтобы вывести среднее количество позиций одного вида в заказах с разбивкой по позициям. Необходимые поля:
-ID товара
-Название товара
-Среднее количество в заказе (имя поля - avg_amount)
+The task is to calculate the average quantity of each product per order and return:
 
+- Product ID
+- Product name
+- Average quantity per order (`avg_amount`)
 
+This task focuses on joining relational tables and calculating product-level aggregate metrics.
 
+---
 
-Задача 3
-Рассмотрим таблицу фиксации прохода через турникет gate :
-employee - имя сотрудника
-check_time - время фиксации прохода
-is_entered - вход - 1, выход 0
-Известно, что за каждым входом следует выход. В начале дня всегда вход, последний всегда выход.
+### Task 3: Employee Attendance Analysis
 
-Необходимо вывести сотрудников и дни, когда они находились на рабочем месте менее 8 часов.
+A `gate` table contains employee entry and exit records:
 
-Ответ должен содержать поля:
-employee
-date (именно дату!)
-real_time - сколько реально времени сотрудник был на рабочем месте
+- `employee` — employee name
+- `check_time` — timestamp of the recorded entry or exit
+- `is_entered` — entry indicator (`1` for entry, `0` for exit)
+
+Each entry is followed by an exit. The first record of the day is always an entry and the last record is always an exit.
+
+The task is to identify employees and dates on which their total time at the workplace was less than eight hours.
+
+The output contains:
+
+- `employee`
+- `date`
+
+This task focuses on analyzing timestamped event data and calculating employee attendance duration.
