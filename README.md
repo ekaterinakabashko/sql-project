@@ -1,6 +1,8 @@
 # SQL querying and relational data analysis
 
-A collection of SQL exercises focused on solving analytical problems using relational data. The project covers sequence analysis, product-level order aggregation, and employee attendance analysis.
+This project was completed as part of a continuing professional education program in Data Analytics, leading to a Data Analyst certificate.
+
+It includes three SQL exercises focused on solving analytical problems using relational databases, covering sequence analysis, product-level order aggregation, and employee attendance analysis.
 
 ## SQL Concepts
 
