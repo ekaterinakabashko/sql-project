@@ -1,31 +1,36 @@
---№1
-with t1 as (
-select a, 
-       row_number () over (order by a), 
-       a -  row_number () over (order by a) as Diff
-from numbers
-)
-select min(a) as start, 
-       max (a) as end 
-from t1
-group by Diff
-order by start
 
---№2
---Вывести среднее количество позиций одного вида в заказах с разбивкой по позициям.
-with t1 as (
-select good_id, sum(coalesce(amount, 1))::numeric/count(*) 
-from orders o
-group by good_id
+-- Task 1: Identify intervals of consecutive numbers.
+WITH t1 AS (
+    SELECT a,
+           ROW_NUMBER() OVER (ORDER BY a),
+           a - ROW_NUMBER() OVER (ORDER BY a) AS Diff
+    FROM numbers
 )
-select * 
-from t1
-right join goods g
-on t1.good_id = g.id
+SELECT MIN(a) AS start,
+       MAX(a) AS end
+FROM t1
+GROUP BY Diff
+ORDER BY start;
 
---№3
---Необходимо вывести сотрудников и дни, когда они находились на рабочем месте менее 8 часов.
-select employee, date(check_time), max(check_time) - min (check_time) as Diff
-from gate
-group by employee, date(check_time)
-having max(check_time) - min (check_time) < interval '8 hours'
+
+-- Task 2: Calculate the average quantity of each product per order.
+WITH t1 AS (
+    SELECT good_id,
+           SUM(COALESCE(amount, 1))::numeric / COUNT(*)
+    FROM orders o
+    GROUP BY good_id
+)
+SELECT *
+FROM t1
+RIGHT JOIN goods g
+    ON t1.good_id = g.id;
+
+
+-- Task 3: Identify employees and dates when their time
+-- at the workplace was less than eight hours.
+SELECT employee,
+       DATE(check_time),
+       MAX(check_time) - MIN(check_time) AS Diff
+FROM gate
+GROUP BY employee, DATE(check_time)
+HAVING MAX(check_time) - MIN(check_time) < INTERVAL '8 hours';
